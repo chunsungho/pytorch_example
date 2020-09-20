@@ -67,4 +67,3 @@ def train_net(net, train_loader, test_loader, _optimizer=optim.SGD,
               val_err[-1], flush=True)
 
     return val_err[-1]
-

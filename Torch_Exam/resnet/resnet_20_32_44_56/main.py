@@ -94,4 +94,3 @@ plt.xlabel('epoch')
 plt.legend(['resnet20','resnet32','resnet44','resnet56'])
 plt.title('resnet test data error')
 plt.show()
-

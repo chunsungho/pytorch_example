@@ -98,6 +98,7 @@ class ResNet(nn.Module):
     def forward(self,input):
 
         if self.version >= 20:
+            # [batch_size, 16,32,32]
             out = self.conv1(input)
             out = self.bn1(out)
             out = self.relu1(out)
@@ -117,6 +118,7 @@ class ResNet(nn.Module):
                         out = self.layer1h(out)
                         out = self.layer1i(out)
 
+            # [batch_size, 32,16,16]
             out = self.layer2a(out)
             out = self.layer2b(out)
             out = self.layer2c(out)
@@ -126,13 +128,14 @@ class ResNet(nn.Module):
                 out = self.layer2e(out)
 
                 if self.version >= 44:
-                    out = self.layer1f(out)
-                    out = self.layer1g(out)
+                    out = self.layer2f(out)
+                    out = self.layer2g(out)
 
                     if self.version >= 56:
-                        out = self.layer1h(out)
-                        out = self.layer1i(out)
+                        out = self.layer2h(out)
+                        out = self.layer2i(out)
 
+            # [batch_size, 64, 8, 8]
             out = self.layer3a(out)
             out = self.layer3b(out)
             out = self.layer3c(out)
@@ -142,18 +145,20 @@ class ResNet(nn.Module):
                 out = self.layer3e(out)
 
                 if self.version >= 44:
-                    out = self.layer1f(out)
-                    out = self.layer1g(out)
+                    out = self.layer3f(out)
+                    out = self.layer3g(out)
 
                     if self.version >= 56:
-                        out = self.layer1h(out)
-                        out = self.layer1i(out)
+                        out = self.layer3h(out)
+                        out = self.layer3i(out)
 
+            # [batch_size, 64, 1, 1]
             out = self.avgPool(out)
+
+            # [batch_size, 128, 64*1*1]
             out = self.flatten(out)
             out = self.fc(out)
             out = self.softmax(out)
 
         return out
-
 
